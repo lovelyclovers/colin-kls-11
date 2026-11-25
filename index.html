@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  HOME PAGE  (biodata.html)
+  ---------------------------------------------------------------------
+  Quick guide:
+   1. Colors ............. search for "COLORS" in the <style> section
+   2. Your name .......... search for "YOUR NAME" in the <body>
+   3. Intro text ......... search for "INTRO TEXT"
+   4. Your photo ......... search for "YOUR PHOTO"
+   5. Footer text ........ search for "FOOTER"
+  Keep this file and about.html in the same folder.
+  Text like this block is a "comment": the browser ignores it, so it
+  is safe to leave, edit or delete. (In HTML, comments sit inside
+  angle brackets with an exclamation mark and two dashes. In CSS and
+  JavaScript, comments sit between slash-star marks or after two slashes.)
+  =====================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- The title shown on the browser tab. Change it to anything you like. -->
+<title>cloverfield_main-page</title>
+
+<!-- FONTS: loads the handwriting (Caveat), heading (Fraunces) and body (Nunito) fonts from Google.
+     Needs internet. To use other fonts, pick them on fonts.google.com and swap the names
+     in the CSS below (look for font-family). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Molle:ital@1&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ COLORS ============
+     Change these color codes to restyle the whole page.
+     Tip: search "color picker" on Google to find hex codes like #fbf3e4. */
+  :root{
+    --paper:#fbf3e4;     /* page background (cream) */
+    --ink:#92a53d;       /* main text color (dark brown) */
+    --soft:#a86e44;      /* lighter text (the intro paragraph, footer) */
+    --peach:#ffd9c2;     /* photo background, first color */
+    --butter:#fff1a8;    /* yellow highlighter behind your name */
+    --blush:#ecdcaf;     /* photo background, second color */
+    --accent:#d9694a;    /* orange-red: greeting text */
+    --green:#729229;     /* clover border + stem color */
+  }
+
+  /* Reset: removes the browser's default spacing so everything starts clean */
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  /* The whole page: font, text color and a plain background color (--paper in COLORS above). */
+  body{
+    font-family:'Nunito',system-ui,sans-serif;   /* main text font */
+    color:var(--ink);
+    line-height:1.7;                             /* space between lines of text */
+    background-color:var(--paper);
+    overflow-x:hidden;
+  }
+
+  /* Add class="hand" to any text to make it handwriting style */
+  .hand{font-family:'Molle',cursive;font-weight:700}
+
+  /* Keeps the content centered and not too wide. Make 980px bigger for a wider page. */
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+
+  /* ---------- HERO: the big top area (text on the left, photo on the right) ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns:1fr 340px;   /* left column flexible, right column (photo) = 340px wide */
+    gap:40px;                          /* space between text and photo */
+    align-items:center;
+    padding:60px 0 50px;               /* space above / below the hero */
+  }
+  /* On phones and small screens: put the photo under the text instead of beside it */
+  @media(max-width:800px){.hero{grid-template-columns:1fr;text-align:center}}
+
+  /* The small tilted greeting ("hey there, welcome in!") */
+  .hello{font-size:1.55rem;color:var(--accent);transform:rotate(0deg);display:inline-block;line-height:1;margin-bottom:-6px}
+                                       /* rotate(-3deg) = tilt. Use 0deg for straight text. */
+
+  /* The big name heading */
+  .hero h1{font-family:'Molle',serif;font-weight:800;font-size:clamp(2.6rem,7vw,4.4rem);line-height:1.05;margin:4px 0 12px}
+
+
+  /* The intro paragraph under your name */
+  .hero p.lead{font-size:1.12rem;color:var(--soft);max-width:470px}
+  @media(max-width:800px){.hero p.lead{margin:auto}}
+
+  /* ---------- clover ---------- */
+  .clover{
+    position:relative;
+    width:300px;                 /* size of the clover. Bigger number = bigger photo */
+    max-width:80vw;
+    aspect-ratio:1;              /* keeps it square */
+    margin:10px auto 50px;       /* the 50px at the bottom leaves room for the caption */
+    transform:rotate(4deg);      /* tilt of the clover. Use 0deg for straight. */
+    transition:transform .4s;
+    cursor:pointer;
+  }
+  /* What happens when you hover the mouse over it: it straightens and grows a little */
+  .clover:hover{transform:rotate(-1deg) scale(1.03)}
+
+  /* The green clover border and stem, drawn behind the photo.
+     Change "stroke-width" to make the border thicker or thinner. */
+  .clover-border{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .clover-border g{fill:var(--green);stroke:var(--green);stroke-width:2;stroke-linejoin:round}
+  .clover-border .stem{fill:none;stroke:var(--green);stroke-width:0;stroke-linecap:round}
+
+  /* The photo area, cut into the clover shape by clip-path */
+  .clover .pic{
+    position:absolute;inset:0;
+    clip-path:url(#cloverClip);                                       /* this line cuts the clover shape */
+    background:linear-gradient(135deg,var(--peach),var(--blush));      /* color shown behind the initials */
+    display:grid;place-items:center;overflow:hidden;
+    font-family:'Molle',cursive;font-size:3rem;font-weight:800;color:#fff;   /* style of the initials */
+    text-shadow:3px 3px 0 rgba(0,0,0,.12);
+  }
+  /* Makes a real photo fill the clover without stretching */
+  .clover .pic img{width:100%;height:100%;object-fit:cover}
+
+  /* The handwritten caption under the clover */
+  .cap{display:block;text-align:center;font-size:1.2rem;color:#5a4636;text-decoration:none;margin-top:-30px}
+                                 /* margin-top pulls it up under the clover. Make it less negative to move it down. */
+
+
+  /* ---------- FOOTER ---------- */
+  footer{text-align:center;padding:50px 20px 70px;color:var(--soft)}
+  footer .hand{font-size:1.6rem}
+</style>
+</head>
+
+<body>
+
+<main class="wrap">
+
+  <div class="hero">
+
+    <!-- LEFT SIDE: the text -->
+    <div>
+      <!-- The small tilted greeting. Change the words freely. -->
+      <span class="hello hand">Student Biodata:</span>
+
+      <!-- YOUR NAME: replace "Your Name" with your real name (keep it inside the span).
+           The initials in the photo below are made from this name automatically
+           (for example "Budi Santoso" becomes "BS"). -->
+      <h1><span class="scribble" id="name">Vincent Colin</span></h1>
+
+      <!-- INTRO TEXT: write a sentence or two about yourself. -->
+      <p class="lead"></p>
+    </div>
+
+     <!-- RIGHT SIDE: the clover-shaped photo.
+         href="about.html" means clicking it opens the second page.
+         Change it to another page or website address if you want. -->
+    <div>
+      <a class="clover" href="about.html" title="Click to get to know me" style="display:block;text-decoration:none;color:inherit">
+
+        <!-- CLOVER SHAPE: three heart-shaped leaves (turned 0, 120 and 240 degrees),
+             a round middle, and a stem. You normally don't need to touch this.
+             - The green outline + stem are drawn in the <g> and <path class="stem"> parts.
+             - The same shape is reused as the "cloverClip" cutter for the photo.
+             The numbers (50 54) are the middle of the clover. -->
+        <svg class="clover-border" viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <path id="leaf" d="M0 0 C-5 -7 -24 -15 -24 -30 C-24 -43 -9 -46 0 -34 C9 -46 24 -43 24 -30 C24 -15 5 -7 0 0Z"/>
+            <clipPath id="cloverClip" clipPathUnits="objectBoundingBox">
+              <use href="#leaf" transform="scale(0.01) translate(50 54)"/>
+              <use href="#leaf" transform="scale(0.01) translate(50 54) rotate(120)"/>
+              <use href="#leaf" transform="scale(0.01) translate(50 54) rotate(240)"/>
+              <circle cx="0.5" cy="0.54" r="0.15"/>
+            </clipPath>
+          </defs>
+          <g>
+            <use href="#leaf" transform="translate(50 54)"/>
+            <use href="#leaf" transform="translate(50 54) rotate(120)"/>
+            <use href="#leaf" transform="translate(50 54) rotate(240)"/>
+            <circle cx="50" cy="54" r="15"/>
+          </g>
+          <path class="stem" d="M50 62 Q50 90 59 97"/>
+        </svg>
+
+        <!-- YOUR PHOTO: right now this shows your initials.
+             To use a real photo:
+               1. Put your picture (for example photo.jpg) in the same folder as this file.
+               2. Replace the line below with:
+                    <div class="pic" id="pic"><img src="photo.jpg" alt="My photo"></div>
+             The photo is cut into the clover shape automatically, and the
+             initials are skipped when a photo is present. -->
+        <div class="pic" id="pic"><img src="stock.png"></div>
+
+      </a>
+
+      <!-- The caption under the clover. It sits OUTSIDE the clover link, so it
+           doesn't rotate with it. It is also a link to the second page. -->
+      <a class="cap hand" href="about.html">click for information!</a>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER: the small message at the bottom. Change the words freely. -->
+<footer>
+  <div class="hand">vibecoded with claude</div>
+  <div>made for school project, no public releases!</div>
+</footer>
+
+</script>
+</body>
+</html>

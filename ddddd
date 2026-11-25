@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All About Me</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,wght@0,600;0,800;1,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fbf3e4; --paper2:#f5e8cf; --ink:#4a3b32; --soft:#8a7566;
+    --line:rgba(120,90,60,.13);
+    --peach:#ffd9c2; --butter:#fff1a8; --mint:#cdecd3; --sky:#cfe4f5; --blush:#f9cfe0; --lav:#e1d6f5;
+    --accent:#d9694a; --green:#6f9a72;
+    --shadow:0 6px 14px rgba(90,60,30,.18);
+  }
+  body.night{
+    --paper:#2b2220; --paper2:#352a27; --ink:#f4e6d2; --soft:#b9a38d; --line:rgba(255,220,170,.07);
+    --peach:#5c3b32; --butter:#5d5230; --mint:#3a4f3f; --sky:#35495a; --blush:#5a3a49; --lav:#473e5e;
+    --accent:#ffa57d; --green:#9cc79f; --shadow:0 6px 16px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Nunito',system-ui,sans-serif;color:var(--ink);line-height:1.7;
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      radial-gradient(circle at 20% 10%,rgba(255,200,150,.25),transparent 40%),
+      radial-gradient(circle at 85% 80%,rgba(255,180,160,.18),transparent 45%);
+    background-size:100% 32px,auto,auto;
+    transition:background-color .6s,color .6s;overflow-x:hidden;
+  }
+  .hand{font-family:'Caveat',cursive;font-weight:700}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+
+  /* little top bar */
+  .top{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;max-width:980px;margin:auto}
+  .top .hand{font-size:1.6rem}
+  .top nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .top a{color:var(--ink);text-decoration:none;font-weight:600;font-size:.92rem;position:relative}
+  .top a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:3px;border-radius:3px;background:var(--accent);transform:scaleX(0);transition:.25s}
+  .top a:hover::after{transform:scaleX(1)}
+  #mode{border:2px dashed var(--soft);background:transparent;color:var(--ink);border-radius:30px;padding:4px 12px;cursor:pointer;font:inherit;font-weight:700;font-size:.85rem}
+  #mode:hover{background:var(--butter)}
+  @media(max-width:620px){.top nav a{display:none}}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:center;padding:30px 0 50px}
+  @media(max-width:800px){.hero{grid-template-columns:1fr;text-align:center}}
+  .hello{font-size:2rem;color:var(--accent);transform:rotate(-3deg);display:inline-block}
+  .hero h1{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(2.6rem,7vw,4.4rem);line-height:1.05;margin:4px 0 12px}
+  .scribble{background:linear-gradient(transparent 62%,var(--butter) 62%,var(--butter) 90%,transparent 90%);padding:0 6px}
+  .hero p.lead{font-size:1.12rem;color:var(--soft);max-width:470px}
+  @media(max-width:800px){.hero p.lead{margin:auto}}
+  .typed-line{margin-top:14px;font-size:1.7rem}
+  .typed-line b{color:var(--green);border-right:3px solid var(--accent);padding-right:3px;animation:caret .8s infinite}
+  @keyframes caret{50%{border-color:transparent}}
+  .hero-btns{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  @media(max-width:800px){.hero-btns{justify-content:center}}
+  .btn{display:inline-block;padding:10px 22px;border-radius:14px;border:2.5px solid var(--ink);background:var(--peach);color:var(--ink);text-decoration:none;font-weight:700;box-shadow:4px 4px 0 var(--ink);transition:.15s;cursor:pointer;font-family:inherit;font-size:.95rem}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+  .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+  .btn.alt{background:var(--mint)}
+
+  /* polaroid */
+  .polaroid{position:relative;width:290px;max-width:80vw;margin:auto;background:#fffdf8;padding:14px 14px 56px;box-shadow:var(--shadow);transform:rotate(4deg);transition:transform .4s;cursor:pointer}
+  .polaroid:hover{transform:rotate(-1deg) scale(1.03)}
+  .polaroid .pic{aspect-ratio:1;background:linear-gradient(135deg,var(--peach),var(--blush));display:grid;place-items:center;overflow:hidden;font-family:'Fraunces',serif;font-size:5.5rem;font-weight:800;color:#fff;text-shadow:3px 3px 0 rgba(0,0,0,.12)}
+  .polaroid .pic img{width:100%;height:100%;object-fit:cover}
+  .polaroid .cap{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:1.6rem;color:#5a4636}
+  .tape{position:absolute;top:-16px;left:50%;width:110px;height:32px;transform:translateX(-50%) rotate(-4deg);background:rgba(255,226,140,.8);box-shadow:0 2px 4px rgba(0,0,0,.1);
+    background-image:repeating-linear-gradient(90deg,transparent 0 6px,rgba(255,255,255,.35) 6px 8px)}
+  .sticker{position:absolute;font-size:2.4rem;animation:wob 3.5s ease-in-out infinite;filter:drop-shadow(2px 3px 2px rgba(0,0,0,.2))}
+  .s1{top:-26px;right:-22px}.s2{bottom:30px;left:-30px;animation-delay:-1.5s}
+  @keyframes wob{50%{transform:rotate(14deg) translateY(-6px)}}
+  .tiny{text-align:center;color:var(--soft);font-size:.8rem;margin-top:22px}
+
+  /* sections */
+  section{padding:34px 0}
+  h2{font-family:'Fraunces',serif;font-size:2rem;margin-bottom:6px}
+  h2 .hand{color:var(--accent);font-size:1.6rem;margin-left:6px;font-weight:500}
+  .sub{color:var(--soft);margin-bottom:24px}
+  .squiggle{height:14px;width:150px;margin:2px 0 14px;background:
+    radial-gradient(circle at 7px 0,transparent 6px,var(--accent) 6.5px,var(--accent) 8.5px,transparent 9px) 0 0/14px 14px repeat-x;opacity:.7}
+
+  /* sticky notes */
+  .notes{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:26px 22px;padding:8px 4px}
+  .note{padding:22px 18px 18px;box-shadow:var(--shadow);transition:transform .25s;position:relative;min-height:112px}
+  .note::before{content:"";position:absolute;top:-9px;left:50%;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:inset -2px -2px 3px rgba(0,0,0,.3),0 2px 3px rgba(0,0,0,.25);transform:translateX(-50%)}
+  .note:nth-child(6n+1){background:var(--butter);transform:rotate(-2deg)}
+  .note:nth-child(6n+2){background:var(--peach);transform:rotate(1.5deg)}
+  .note:nth-child(6n+3){background:var(--mint);transform:rotate(-1deg)}
+  .note:nth-child(6n+4){background:var(--sky);transform:rotate(2deg)}
+  .note:nth-child(6n+5){background:var(--blush);transform:rotate(-1.5deg)}
+  .note:nth-child(6n+6){background:var(--lav);transform:rotate(1deg)}
+  .note:hover{transform:rotate(0) scale(1.06) translateY(-4px);z-index:2}
+  .note small{font-family:'Caveat',cursive;font-size:1.25rem;display:block;opacity:.75;line-height:1.1}
+  .note b{font-size:1.05rem;display:block;margin-top:4px}
+  .note .e{font-size:1.5rem}
+
+  /* story */
+  .story{background:#fffdf8;color:#4a3b32;padding:28px 30px;box-shadow:var(--shadow);transform:rotate(-.6deg);position:relative;border-left:6px solid var(--accent);font-size:1.08rem}
+  body.night .story{background:#3a2e2a;color:var(--ink)}
+  .story::first-letter{font-family:'Fraunces',serif;font-size:3rem;float:left;line-height:.9;margin:4px 8px 0 0;color:var(--accent)}
+  .sig{font-size:1.8rem;text-align:right;color:var(--accent);margin-top:6px}
+
+  /* numbers */
+  .nums{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px}
+  .num{flex:1 1 130px;text-align:center;border:2.5px dashed var(--soft);border-radius:20px;padding:14px 8px}
+  .num .n{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:800;color:var(--accent);line-height:1.1}
+  .num span{font-size:.85rem;color:var(--soft)}
+
+  /* skills */
+  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 40px}
+  .sk{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:2px dotted var(--line)}
+  .dots{display:flex;gap:5px}
+  .dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--ink);background:transparent;transition:.3s}
+  .dots i.on{background:var(--green);border-color:var(--green)}
+  .sk:hover .dots i.on{transform:scale(1.25)}
+
+  /* diary chapters */
+  .chapters{position:relative;padding-left:34px;border-left:3px dashed var(--soft);margin-left:12px}
+  .chap{position:relative;margin-bottom:26px;background:#fffdf8;color:#4a3b32;padding:16px 20px;box-shadow:var(--shadow);border-radius:4px 16px 16px 16px}
+  body.night .chap{background:#3a2e2a;color:var(--ink)}
+  .chap::before{content:attr(data-e);position:absolute;left:-58px;top:10px;width:40px;height:40px;border-radius:50%;background:var(--butter);border:3px solid var(--paper);display:grid;place-items:center;font-size:1.2rem}
+  .chap .yr{font-size:1.4rem;color:var(--accent);line-height:1}
+  .chap b{display:block}
+  .chap p{color:var(--soft);font-size:.95rem}
+
+  /* stickers */
+  .stickers{display:flex;flex-wrap:wrap;gap:14px}
+  .stk{background:#fffdf8;color:#4a3b32;padding:10px 20px;border-radius:40px;border:3px solid #fffdf8;outline:2.5px dashed var(--soft);box-shadow:var(--shadow);font-weight:700;cursor:default;transition:.25s}
+  body.night .stk{background:#3a2e2a;color:var(--ink);border-color:#3a2e2a}
+  .stk:nth-child(odd){transform:rotate(-3deg)}.stk:nth-child(even){transform:rotate(2.5deg)}
+  .stk:hover{transform:rotate(0) scale(1.15) translateY(-4px);background:var(--butter)}
+
+  /* favourites */
+  .favs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+  .fav{background:var(--paper2);border-radius:20px;padding:18px 22px;border:2.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+  .fav h3{font-size:1.5rem;color:var(--accent)}
+  .fav ul{list-style:none;margin-top:4px}
+  .fav li::before{content:"♡ ";color:var(--accent)}
+
+  /* jar */
+  .jar{text-align:center;padding:10px}
+  .jar-box{font-size:4.5rem;cursor:pointer;display:inline-block;transition:.2s}
+  .jar-box:hover{animation:shake .5s}
+  @keyframes shake{25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+  .paper{max-width:430px;margin:14px auto 0;min-height:90px;background:var(--butter);padding:20px;box-shadow:var(--shadow);transform:rotate(-1.5deg);font-size:1.7rem;line-height:1.25;display:grid;place-items:center;color:#4a3b32}
+  body.night .paper{color:var(--ink)}
+  .paper.pop{animation:pop .5s}
+  @keyframes pop{0%{transform:scale(.3) rotate(-20deg);opacity:0}100%{transform:scale(1) rotate(-1.5deg);opacity:1}}
+
+  /* say hi */
+  .hi-card{background:var(--blush);border:2.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink);border-radius:24px;padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+  @media(max-width:700px){.hi-card{grid-template-columns:1fr}}
+  .hi-card h2{margin-bottom:0}
+  .hi-card ul{list-style:none}
+  .hi-card li{padding:6px 0;font-weight:700}
+
+  footer{text-align:center;padding:50px 20px 70px;color:var(--soft)}
+  footer .hand{font-size:1.6rem}
+
+  /* floating leaves */
+  .leaf{position:fixed;top:-40px;font-size:1.4rem;opacity:.6;pointer-events:none;z-index:0;animation:fall linear infinite}
+  @keyframes fall{to{transform:translate(60px,110vh) rotate(360deg)}}
+  main,.top{position:relative;z-index:1}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+  .reveal.show{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="hand" id="mono">~ me ~</div>
+  <nav>
+    <a href="#me">the basics</a>
+    <a href="#skills">things I'm good at</a>
+    <a href="#story">my story</a>
+    <a href="#favs">favourites</a>
+    <a href="#hi">say hi</a>
+    <button id="mode">🌙 evening mode</button>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <div>
+      <span class="hello hand">hey there, welcome in!</span>
+      <h1>I'm <span class="scribble" id="name">Your Name</span></h1>
+      <p class="lead" id="lead">Pull up a chair, grab a warm drink, and get to know me a little. This is my cozy corner of the internet.</p>
+      <div class="typed-line hand">right now I'm a <b id="typed"></b></div>
+      <div class="hero-btns">
+        <a class="btn" href="#me">Read about me</a>
+        <a class="btn alt" href="#hi">Say hi 👋</a>
+      </div>
+    </div>
+    <div>
+      <div class="polaroid" id="polaroid" title="Click to add your photo">
+        <div class="tape"></div>
+        <div class="pic" id="pic">YN</div>
+        <div class="cap hand" id="cap">that's me!</div>
+        <span class="sticker s1">🌼</span>
+        <span class="sticker s2">☕</span>
+      </div>
+      <input type="file" id="file" accept="image/*" hidden>
+      <div class="tiny hand" style="font-size:1.2rem">(click the photo to swap in your own)</div>
+    </div>
+  </div>
+
+  <section id="me" class="reveal">
+    <h2>The basics <span class="hand">pinned to my wall</span></h2>
+    <div class="squiggle"></div>
+    <div class="notes">
+      <div class="note"><span class="e">🧑</span><small>my name</small><b>Your Full Name</b></div>
+      <div class="note"><span class="e">🎂</span><small>born</small><b>Jakarta, 1 January 2005</b></div>
+      <div class="note"><span class="e">⭐</span><small>everyone calls me</small><b>Nickname</b></div>
+      <div class="note"><span class="e">🌏</span><small>from</small><b>Indonesia</b></div>
+      <div class="note"><span class="e">🏡</span><small>I live in</small><b>Jakarta</b></div>
+      <div class="note"><span class="e">🗣️</span><small>I speak</small><b>Indonesian &amp; English</b></div>
+      <div class="note"><span class="e">🎓</span><small>studying</small><b>Your Major</b></div>
+      <div class="note"><span class="e">📱</span><small>text me</small><b>+62 812-3456-7890</b></div>
+      <div class="note"><span class="e">💌</span><small>write me</small><b>you@email.com</b></div>
+    </div>
+  </section>
+
+  <section id="story" class="reveal">
+    <h2>A little about me <span class="hand">in my own words</span></h2>
+    <div class="squiggle"></div>
+    <div class="story">
+      Write a short, warm story about yourself here. Where you grew up, what makes you smile, what you're dreaming about these days. It doesn't have to be fancy, just sound like you talking to a friend over tea.
+      <div class="sig hand">— your name</div>
+    </div>
+    <div class="nums">
+      <div class="num"><div class="n" data-c="21">0</div><span>years of being me</span></div>
+      <div class="num"><div class="n" data-c="365">0</div><span>sunsets watched (ish)</span></div>
+      <div class="num"><div class="n" data-c="99">0</div><span>cups of coffee ☕</span></div>
+      <div class="num"><div class="n" data-c="7">0</div><span>houseplants kept alive 🌱</span></div>
+    </div>
+  </section>
+
+  <section id="skills" class="reveal">
+    <h2>Things I'm good at <span class="hand">(and learning)</span></h2>
+    <div class="squiggle"></div>
+    <div class="skills" id="skillList"></div>
+  </section>
+
+  <section id="journey" class="reveal">
+    <h2>My chapters so far <span class="hand">dear diary…</span></h2>
+    <div class="squiggle"></div>
+    <div class="chapters">
+      <div class="chap" data-e="🎓"><div class="yr hand">2023 – now</div><b>University Name</b><p>Studying Your Major, making friends and a bit of chaos.</p></div>
+      <div class="chap" data-e="📚"><div class="yr hand">2020 – 2023</div><b>Senior High School</b><p>Where I found out what I really like.</p></div>
+      <div class="chap" data-e="🎒"><div class="yr hand">2017 – 2020</div><b>Junior High School</b><p>Awkward haircuts, great memories.</p></div>
+      <div class="chap" data-e="🌱"><div class="yr hand">2005</div><b>Hello, world!</b><p>The day it all began.</p></div>
+    </div>
+  </section>
+
+  <section id="hobbies" class="reveal">
+    <h2>What makes me happy <span class="hand">my sticker collection</span></h2>
+    <div class="squiggle"></div>
+    <div class="stickers">
+      <div class="stk">🎵 Music</div><div class="stk">📖 Reading</div><div class="stk">🏸 Badminton</div>
+      <div class="stk">🎬 Movie nights</div><div class="stk">✈️ Travelling</div><div class="stk">🍜 Trying food</div>
+      <div class="stk">📷 Taking photos</div><div class="stk">🎮 Gaming</div><div class="stk">🌧️ Rainy days</div>
+    </div>
+  </section>
+
+  <section id="favs" class="reveal">
+    <h2>My favourites <span class="hand">a peek inside my head</span></h2>
+    <div class="squiggle"></div>
+    <div class="favs">
+      <div class="fav"><h3 class="hand">🍽️ Food &amp; drinks</h3><ul><li>Nasi goreng</li><li>Iced milk tea</li><li>Anything with cheese</li></ul></div>
+      <div class="fav"><h3 class="hand">🎧 Songs on repeat</h3><ul><li>Song title one</li><li>Song title two</li><li>Song title three</li></ul></div>
+      <div class="fav"><h3 class="hand">🎞️ Watching &amp; reading</h3><ul><li>Favourite movie</li><li>Favourite series</li><li>Favourite book</li></ul></div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <h2>Secret jar <span class="hand">of random facts</span></h2>
+    <div class="squiggle"></div>
+    <div class="jar">
+      <div class="jar-box" id="jar" title="Pull out a note">🫙</div>
+      <div class="hand" style="font-size:1.3rem;color:var(--soft)">tap the jar to pull out a note</div>
+      <div class="paper hand" id="paper">What will it say?</div>
+    </div>
+  </section>
+
+  <section id="hi" class="reveal">
+    <div class="hi-card">
+      <div>
+        <h2>Say hi! 👋</h2>
+        <p>I love meeting new people. Don't be shy, drop me a message anytime.</p>
+      </div>
+      <ul>
+        <li>💌 you@email.com</li>
+        <li>📱 +62 812-3456-7890</li>
+        <li>📸 @yourusername</li>
+        <li>📍 Jakarta, Indonesia</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="hand">thanks for stopping by 🧡</div>
+  <div>made with love and too much tea · <span id="yr"></span></div>
+</footer>
+
+<script>
+  // ===== EDIT THESE =====
+  const ROLES = ["student","daydreamer","tea lover","night owl","work in progress"];
+  const SKILLS = [["Talking to people",5],["Working in a team",4],["Staying organised",4],["Being creative",4],["English",3],["Cooking (instant noodles count)",2]];
+  const NOTES = [
+    "I can't start my day without coffee ☕",
+    "I once stayed up all night to finish a book 📚",
+    "I want to visit 20 countries one day ✈️",
+    "Every expert was once a beginner 🌱",
+    "I'm always hungry for snacks 🍟",
+    "I talk to my plants (they listen) 🪴"
+  ];
+  // ======================
+
+  // typing
+  const typed = document.getElementById('typed'); let ri=0,ci=0,del=false;
+  (function t(){
+    const w = ROLES[ri]; typed.textContent = w.slice(0,ci);
+    if(!del && ci===w.length){del=true;return setTimeout(t,1400)}
+    if(del && ci===0){del=false;ri=(ri+1)%ROLES.length}
+    ci += del?-1:1; setTimeout(t, del?50:100);
+  })();
+
+  // skills as dots
+  document.getElementById('skillList').innerHTML = SKILLS.map(([n,l]) =>
+    `<div class="sk"><span>${n}</span><span class="dots">${[1,2,3,4,5].map(i=>`<i data-on="${i<=l}"></i>`).join('')}</span></div>`).join('');
+
+  // reveal + counters + dots filling
+  const count = el => { const T=+el.dataset.c; let n=0, s=Math.max(1,Math.ceil(T/50));
+    const id=setInterval(()=>{n=Math.min(T,n+s);el.textContent=n;if(n>=T)clearInterval(id)},30) };
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if(!e.isIntersecting) return;
+    e.target.classList.add('show');
+    e.target.querySelectorAll('[data-c]').forEach(count);
+    e.target.querySelectorAll('.dots i[data-on="true"]').forEach((d,i)=>setTimeout(()=>d.classList.add('on'),150*(i%5)+200));
+    io.unobserve(e.target);
+  }), {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // evening mode
+  const mode = document.getElementById('mode');
+  mode.onclick = () => { document.body.classList.toggle('night');
+    mode.textContent = document.body.classList.contains('night') ? '☀️ daytime mode' : '🌙 evening mode'; };
+
+  // photo
+  const file = document.getElementById('file');
+  document.getElementById('polaroid').onclick = () => file.click();
+  file.onchange = () => { const f=file.files[0]; if(!f) return; const r=new FileReader();
+    r.onload = () => document.getElementById('pic').innerHTML = '<img alt="Me" src="'+r.result+'">'; r.readAsDataURL(f); };
+
+  // jar
+  let last=-1;
+  document.getElementById('jar').onclick = () => {
+    let n; do{n=Math.floor(Math.random()*NOTES.length)}while(n===last); last=n;
+    const p=document.getElementById('paper'); p.textContent=NOTES[n];
+    p.classList.remove('pop'); void p.offsetWidth; p.classList.add('pop');
+  };
+
+  // falling leaves & petals
+  const bits = ['🍃','🌸','🍂','✨','🌼'];
+  for(let i=0;i<9;i++){
+    const l=document.createElement('div'); l.className='leaf'; l.textContent=bits[i%bits.length];
+    l.style.left=(Math.random()*100)+'vw'; l.style.animationDuration=(14+Math.random()*14)+'s';
+    l.style.animationDelay=(-Math.random()*20)+'s'; l.style.fontSize=(1+Math.random()*.8)+'rem';
+    document.body.appendChild(l);
+  }
+
+  // initials
+  const parts = document.getElementById('name').textContent.trim().split(/\s+/);
+  document.getElementById('pic').textContent = (parts[0][0]+(parts[1]?parts[1][0]:'')).toUpperCase();
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

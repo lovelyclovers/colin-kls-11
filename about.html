@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  SECOND PAGE  (about.html)
+  ---------------------------------------------------------------------
+  Quick guide:
+   1. Colors ................. search for "COLORS" in the <style> section
+   2. Your details ........... search for "BASIC INFORMATION"
+  Keep this file and index.html in the same folder.
+  Text like this block is a "comment": the browser ignores it, so it
+  is safe to leave, edit or delete. (In HTML, comments sit inside
+  angle brackets with an exclamation mark and two dashes. In CSS and
+  JavaScript, comments sit between slash-star marks or after two slashes.)
+  =====================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- The title shown on the browser tab. -->
+<title>More About Me</title>
+
+<!-- FONTS: heading/card font (Fraunces) and body font (Nunito) from Google. Needs internet. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,800;1,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ COLORS ============
+     Change these color codes to restyle the page.
+     Keep them the same as index.html so both pages match. */
+  :root{
+    --paper:#fbf3e4;     /* page background (cream) */
+    --ink:#4a3b32;       /* main text color (dark brown) */
+    --soft:#8a7566;      /* lighter text */
+    --frame:#8a6a4a;     /* antique brown: the card and button borders */
+    --accent:#72a52f;    /* orange-red: the wavy line under the heading */
+  }
+
+  /* Reset: removes the browser's default spacing so everything starts clean */
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  /* The whole page: font, text color and a plain background color (--paper in COLORS above). */
+  body{
+    font-family:'Nunito',system-ui,sans-serif;
+    color:var(--ink);
+    line-height:1.7;
+    background-color:var(--paper);
+    overflow-x:hidden;
+  }
+
+  /* Keeps the content centered and not too wide. Make 980px bigger for a wider page. */
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+
+  /* The "Back home" button at the bottom: styled like the card, with the
+     same double antique border, parchment color and soft italic serif font.
+     (To add the thin outer frame back, add: outline:1px solid var(--frame); outline-offset:4px;) */
+  .btn{
+    display:inline-block;padding:10px 28px;
+    font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:1.25rem;
+    color:var(--ink);text-decoration:none;
+    background:#fffaf0;                    /* parchment color (same as the card) */
+    border:4px double var(--frame);        /* double antique border */
+  }
+
+  /* ---------- SECTIONS (the titled block: "Basic Information") ---------- */
+  section{padding:34px 0}
+  h2{font-family:'Fraunces',serif;font-size:2rem;margin-bottom:6px}              /* big section title */
+
+  /* The wavy orange line under each title. Delete this rule (and the
+     <div class="squiggle"> lines) to remove it. */
+  .squiggle{height:14px;width:150px;margin:2px 0 14px;background:
+    radial-gradient(circle at 7px 0,transparent 6px,var(--accent) 6.5px,var(--accent) 8.5px,transparent 9px) 0 0/14px 14px repeat-x;opacity:.7}
+
+  /* ---------- BASIC INFORMATION CARD ----------
+     A minimal antique-style card: a double border with a thin inner frame.
+     Change the border color with --frame in COLORS above. */
+  .info{
+    max-width:640px;
+    padding:30px 36px;
+    background:#fffaf0;                    /* warm parchment color */
+    border:4px double var(--frame);        /* the double antique border */
+    outline:1px solid var(--frame);        /* thin second frame around it */
+    outline-offset:5px;
+    font-family:'Fraunces',serif;          /* soft, cozy serif font */
+  }
+  /* One row = label on the left, your info on the right, dotted line between */
+  .info .row{
+    display:flex;align-items:baseline;gap:10px;
+    padding:9px 0;
+  }
+  .info .row + .row{border-top:1px solid rgba(138,106,74,.18)}   /* faint line between rows */
+  .info .label{font-style:italic;color:var(--soft);font-size:1rem;white-space:nowrap}
+  .info .dots{flex:1;border-bottom:2px dotted rgba(138,106,74,.45);transform:translateY(-4px)}
+  .info .value{font-weight:600;font-size:1.08rem;text-align:right}
+  /* ---------- LAYOUT: info card on the left, picture frame on the right ----------
+     On narrow screens (phones) the frame drops below the card automatically. */
+  .about-row{display:flex;flex-wrap:wrap;align-items:center;gap:50px}
+  .about-row .info{flex:1 1 440px;min-width:0}
+
+  /* ---------- PICTURE FRAME ----------
+     frame.png is the ornate frame (keep it in the same folder as this file).
+     Your picture sits BEHIND it, inside the opening.
+     Change the frame size with "width" below. */
+  .frame{position:relative;width:280px;max-width:100%;flex:0 0 auto}
+  .frame-img{display:block;width:100%;height:auto;position:relative;z-index:2}   /* the frame itself, on top */
+  .frame-photo{                                  /* the opening where your picture shows */
+    position:absolute;z-index:1;
+    left:22.5%;top:18.7%;width:55.7%;height:62.6%;   /* matches the hole in frame.png */
+    display:grid;place-items:center;
+    background:#fffaf0;                          /* parchment color shown until you add a picture */
+    color:var(--soft);font-family:'Fraunces',serif;font-style:italic;
+  }
+  .frame-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}   /* fills the opening without stretching */
+
+  /* Floating leaves & flowers animation */
+  .leaf{
+    position:fixed;
+    top:-40px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.75;
+    animation:fall linear infinite;
+  }
+  @keyframes fall{
+    0%{transform:translateY(-40px) rotate(0deg)}
+    100%{transform:translateY(110vh) rotate(360deg)}
+  }
+
+  @media(max-width:520px){.info{padding:22px 20px}.info .row{flex-wrap:wrap}.info .dots{display:none}.info .value{text-align:left;width:100%}}
+
+</style>
+</head>
+
+<body>
+
+<main class="wrap">
+  <!-- ============ BASIC INFORMATION ============
+       Your details, one row per line. Each row looks like this:
+         <div class="row"><span class="label">LABEL</span><span class="dots"></span><span class="value">YOUR INFO</span></div>
+       - LABEL ..... the small italic text on the left (like "Born")
+       - YOUR INFO . the bold text on the right (like your birth date)
+       To ADD a row: copy one full line and paste it where you want it.
+       To REMOVE a row: delete its whole line.
+       To REORDER: move the lines up or down.
+       Everything below is example text. -->
+  <section id="me">
+    <h2>Basic Information</h2>
+    <div class="squiggle"></div>
+    <div class="about-row">
+    <div class="info">
+      <div class="row"><span class="label">Full name</span><span class="dots"></span><span class="value">Vincent Colin</span></div>
+      <div class="row"><span class="label">Known as</span><span class="dots"></span><span class="value">Colin</span></div>
+      <div class="row"><span class="label">Born</span><span class="dots"></span><span class="value">Jakarta, 27th May 2010</span></div>
+      <div class="row"><span class="label">From</span><span class="dots"></span><span class="value">Indonesia</span></div>
+      <div class="row"><span class="label">Lives in</span><span class="dots"></span><span class="value">Jakarta</span></div>
+      <div class="row"><span class="label">Languages</span><span class="dots"></span><span class="value">Indonesian &amp; English</span></div>
+      <div class="row"><span class="label">Phone</span><span class="dots"></span><span class="value">+62 812-9618-1930</span></div>
+      <div class="row"><span class="label">Email</span><span class="dots"></span><span class="value">vincent.colint@email.com</span></div>
+    </div>
+
+    <!-- YOUR PICTURE: the painting inside the frame.
+         To use a different picture:
+           1. Put it in the same folder as this file.
+           2. Change the file name in src="painting.jpg" below to match.
+         The picture is cropped to fit the frame automatically. -->
+    <div class="frame">
+      <div class="frame-photo"><img src="painting.jpg" alt="Vintage red clover painting"></div>
+      <img class="frame-img" src="frame.png" alt="">
+    </div>
+    </div>
+  </section>
+
+  <!-- The button that goes back to the home page -->
+  <a class="btn" href="index.html" style="margin-top:10px">Back home</a>
+</main>
+
+<script>
+const bits = ['🍃','🌸','🍂','✨','🌼'];
+  for(let i=0;i<9;i++){
+    const l=document.createElement('div'); l.className='leaf'; l.textContent=bits[i%bits.length];
+    l.style.left=(Math.random()*100)+'vw'; l.style.animationDuration=(14+Math.random()*14)+'s';
+    l.style.animationDelay=(-Math.random()*20)+'s'; l.style.fontSize=(1+Math.random()*.8)+'rem';
+    document.body.appendChild(l);
+  }
+</script>
+</body>
+</html>
